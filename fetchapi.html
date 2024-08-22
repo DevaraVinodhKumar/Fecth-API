@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Api</title>
+</head>
+<style>
+    #container{
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+        gap: 20px;
+        border: 1px solid black;
+    }
+    .img{
+        width: 100px;
+        height: 100px;
+    }
+    p,h3{
+        text-align: center;
+    }
+</style>
+<body>
+    <div id="container">
+
+    </div>
+</body>
+</html>
+<script>
+    async function datafetching(){
+
+        try{
+            let data =  await fetch("https://restcountries.com/v3.1/all");
+            let response =  await data.json();
+
+            
+            let container = document.querySelector("#container");
+
+            response.map(function(element){
+                let p = document.createElement("h3");
+                p.innerText = element.name.common;
+
+                let image = document.createElement("img");
+                image.src = element.flags.png;
+
+                let population = document.createElement("p");
+                population.innerText = element.population;
+
+                let Region = document.createElement("p");
+                Region.innerText = element.region;
+
+                let Capital = document.createElement("p");
+                Capital.innerText = element.capital;
+
+                container.append(p,image,population,Region,Capital);
+            })
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+    datafetching();
+</script>
